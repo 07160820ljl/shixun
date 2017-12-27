@@ -54,7 +54,7 @@ public class InaccountDAO {
         return null;
     }
 //        删除收入信息
-    public void datele(Integer...ids){
+    public void detele(Integer...ids){
         if (ids.length<0){
             StringBuffer sb = new StringBuffer();
             for (int i = 0;i < ids.length; i++){
@@ -85,7 +85,7 @@ public class InaccountDAO {
         return tb_inaccount;
     }
 //    获取收入信息的记录数
-    public long getcount() {
+    public long getCount() {
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select count(id) from tb_inaccount",null);
         if (cursor.moveToNext()){
