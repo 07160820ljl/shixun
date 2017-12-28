@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.apple.ljl.activity.Accountflag;
 import com.example.apple.ljl.activity.AddInaccount;
+import com.example.apple.ljl.activity.AddOutaccount;
 import com.example.apple.ljl.activity.Inaccountinfo;
 import com.example.apple.ljl.activity.Showinfo;
 
@@ -41,9 +42,9 @@ public class LjlActivity extends AppCompatActivity {
                 Intent intent = null;
                 switch (arg2) {
                     case 0:
-                       /* intent = new Intent(LjlActivity.this, AddOutaccount.class);
+                        intent = new Intent(LjlActivity.this, AddOutaccount.class);
                         startActivity(intent);
-                        break;*/
+                        break;
                     case 1:
                         intent = new Intent(LjlActivity.this, AddInaccount.class);
                         startActivity(intent);
