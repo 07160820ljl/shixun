@@ -51,7 +51,7 @@ public class FlagDAO {
      */
     public Tb_flag find(int id) {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
-        Cursor cursor = db.rawQuery("select _id,flag from tb_flag where _id = ?", new String[] { String.valueOf(id) });// 根据编号查找便签信息，并存储到Cursor类中
+        Cursor cursor = db.rawQuery("select id,flag from tb_flag where _id = ?", new String[] { String.valueOf(id) });// 根据编号查找便签信息，并存储到Cursor类中
         if (cursor.moveToNext()) {// 遍历查找到的便签信息
 
             // 将遍历到的便签信息存储到Tb_flag类中

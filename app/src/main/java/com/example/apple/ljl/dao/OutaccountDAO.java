@@ -116,7 +116,7 @@ public class OutaccountDAO {
      */
     public long getCount() {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
-        Cursor cursor = db.rawQuery("select count(_id) from tb_outaccount", null);// 获取支出信息的记录数
+        Cursor cursor = db.rawQuery("select count(id) from tb_outaccount", null);// 获取支出信息的记录数
         if (cursor.moveToNext()) {// 判断Cursor中是否有数据
 
             return cursor.getLong(0);// 返回总记录数

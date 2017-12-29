@@ -23,14 +23,14 @@ public class InaccountDAO {
 //  添加收入信息
     public void add(Tb_inaccount tb_inaccount){
         db = helper.getWritableDatabase();
-        db.execSQL("insert into tb_inaccount(id,money,time,type,handler,mark) values(?,?,?,?,?,?)",
+        db.execSQL("insert into tb_inaccount(_id,money,time,type,handler,mark) values(?,?,?,?,?,?)",
                 new Object[] {tb_inaccount.getId(),tb_inaccount.getMoney(),tb_inaccount.getTime(),tb_inaccount.getType()
                 ,tb_inaccount.getHandler(),tb_inaccount.getMark()});
     }
 //    修改收入信息操作
     public void update(Tb_inaccount tb_inaccount) {
         db = helper.getWritableDatabase();
-        db.execSQL("update tb_inaccount set money = ?,time = ?,handler = ?,mark = ? where id = ?",
+        db.execSQL("update tb_inaccount set money = ?,time = ?,handler = ?,mark = ? where _id = ?",
                 new Object[]{
                         tb_inaccount.getMoney(), tb_inaccount.getTime(), tb_inaccount.getType(),
                         tb_inaccount.getHandler(), tb_inaccount.getMark(), tb_inaccount.getId()
@@ -39,12 +39,12 @@ public class InaccountDAO {
 //    查找收入信息
     public Tb_inaccount find(int id) {
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,money,time,type,handler,mark from tb_inaccount where id=?",
+        Cursor cursor = db.rawQuery("select _id,money,time,type,handler,mark from tb_inaccount where _id=?",
                 new String[]{
                         String.valueOf(id)
                 });
         if (cursor.moveToNext()) {
-            return new Tb_inaccount(cursor.getInt(cursor.getColumnIndex("id")),
+            return new Tb_inaccount(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getDouble(cursor.getColumnIndex("money")),
                     cursor.getString(cursor.getColumnIndex("time")),
                     cursor.getString(cursor.getColumnIndex("type")),
@@ -62,7 +62,7 @@ public class InaccountDAO {
             }
             sb.deleteCharAt(sb.length()-1);
             db = helper.getWritableDatabase();
-            db.execSQL("delete from tb_inaccount where id in("+sb+")",(Object[]) ids);
+            db.execSQL("delete from tb_inaccount where _id in("+sb+")",(Object[]) ids);
         }
     }
 //    获取收入信息
@@ -75,7 +75,7 @@ public class InaccountDAO {
                         String.valueOf(count)
                 });
         while (cursor.moveToNext()){
-            tb_inaccount.add(new Tb_inaccount(cursor.getInt(cursor.getColumnIndex("id")),
+            tb_inaccount.add(new Tb_inaccount(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getDouble(cursor.getColumnIndex("money")),
                     cursor.getString(cursor.getColumnIndex("time")),
                     cursor.getString(cursor.getColumnIndex("type")),
@@ -96,7 +96,7 @@ public class InaccountDAO {
 //    获取收入信息表中的最大编号
     public int getMaxId(){
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select max(id) from tb_inaccount",null);
+        Cursor cursor = db.rawQuery("select max(_id) from tb_inaccount",null);
         while (cursor.moveToNext()){
             return cursor.getInt(0);
         }

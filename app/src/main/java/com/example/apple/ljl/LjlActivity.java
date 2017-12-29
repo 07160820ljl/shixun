@@ -17,7 +17,9 @@ import com.example.apple.ljl.activity.Accountflag;
 import com.example.apple.ljl.activity.AddInaccount;
 import com.example.apple.ljl.activity.AddOutaccount;
 import com.example.apple.ljl.activity.Inaccountinfo;
+import com.example.apple.ljl.activity.Outaccountinfo;
 import com.example.apple.ljl.activity.Showinfo;
+import com.example.apple.ljl.activity.Sysset;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +52,9 @@ public class LjlActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 2:
-                        /*intent = new Intent(LjlActivity.this, Outaccountinfo.class);
+                        intent = new Intent(LjlActivity.this, Outaccountinfo.class);
                         startActivity(intent);
-                        break;*/
+                        break;
                     case 3:
                         intent = new Intent(LjlActivity.this, Inaccountinfo.class);
                         startActivity(intent);
@@ -62,15 +64,16 @@ public class LjlActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 5:
-                       /* intent = new Intent(LjlActivity.this, Sysset.class);
+                        intent = new Intent(LjlActivity.this, Sysset.class);
                         startActivity(intent);
-                        break;*/
+                        break;
                     case 6:
                         intent = new Intent(LjlActivity.this, Accountflag.class);
                         startActivity(intent);
                         break;
                     case 7:
-                        finish();// 关闭当前Activity
+                        finish();// 关闭当前
+                        // Activity
                 }
             }
         });

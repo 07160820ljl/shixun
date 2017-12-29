@@ -5,7 +5,9 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,84 +21,83 @@ import com.example.apple.ljl.dao.OutaccountDAO;
 import com.example.apple.ljl.model.Tb_outaccount;
 
 
-public class AddOutaccount extends Activity {
-    protected static final int DATE_DIALOG_ID = 0;// �������ڶԻ�����
-    EditText txtMoney, txtTime, txtAddress, txtMark;// ����4��EditText����
-    Spinner spType;// ����Spinner����
-    Button btnSaveButton;// ����Button���󡰱��桱
-    Button btnCancelButton;// ����Button����ȡ��
+public class AddOutaccount extends Activity{
+    protected static final int DATE_DIALOG_ID = 0;
+    EditText txtMoney, txtTime, txtAddress, txtMark;
+    Spinner spType;
+    Button btnSaveButton;
+    Button btnCancelButton;
 
-    private int mYear;// ��
-    private int mMonth;// ��
-    private int mDay;// ��
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addoutaccount);// ���ò����ļ�
-        txtMoney = (EditText) findViewById(R.id.txtMoney);// ��ȡ����ı���
-        txtTime = (EditText) findViewById(R.id.txtTime);// ��ȡʱ���ı���
-        txtAddress = (EditText) findViewById(R.id.txtAddress);// ��ȡ�ص��ı���
-        txtMark = (EditText) findViewById(R.id.txtMark);// ��ȡ��ע�ı���
-        spType = (Spinner) findViewById(R.id.spType);// ��ȡ��������б�
-        btnSaveButton = (Button) findViewById(R.id.btnSave);// ��ȡ���水ť
-        btnCancelButton = (Button) findViewById(R.id.btnCancel);// ��ȡȡ��ť
+        setContentView(R.layout.addoutaccount);
+        txtMoney = (EditText) findViewById(R.id.txtMoney);
+        txtTime = (EditText) findViewById(R.id.txtTime);
+        txtAddress = (EditText) findViewById(R.id.txtAddress);
+        txtMark = (EditText) findViewById(R.id.txtMark);
+        spType = (Spinner) findViewById(R.id.spType);
+        btnSaveButton = (Button) findViewById(R.id.btnSave);
+        btnCancelButton = (Button) findViewById(R.id.btnCancel);
 
-        txtTime.setOnClickListener(new OnClickListener() {// Ϊʱ���ı������õ��������¼�
+        txtTime.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                showDialog(DATE_DIALOG_ID);// ��ʾ����ѡ��Ի���
+                showDialog(DATE_DIALOG_ID);
             }
         });
 
-        btnSaveButton.setOnClickListener(new OnClickListener() {// Ϊ���水ť���ü����¼�
+        btnSaveButton.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View arg0) {
-                        String strMoney = txtMoney.getText().toString();// ��ȡ����ı����ֵ
-                        if (!strMoney.isEmpty()) {// �жϽ�Ϊ��
-                            // ����OutaccountDAO����
+                        String strMoney = txtMoney.getText().toString();
+                        if (!strMoney.isEmpty()) {
                             OutaccountDAO outaccountDAO = new OutaccountDAO(AddOutaccount.this);
-                            // ����Tb_outaccount����
                             Tb_outaccount tb_outaccount = new Tb_outaccount(outaccountDAO.getMaxId() + 1, Double.parseDouble(strMoney), txtTime.getText()
                                     .toString(), spType.getSelectedItem().toString(), txtAddress.getText().toString(), txtMark.getText().toString());
-                            outaccountDAO.add(tb_outaccount);// ���֧����Ϣ
-                            // ������Ϣ��ʾ
-                            Toast.makeText(AddOutaccount.this, "������֧���������ӳɹ���", Toast.LENGTH_SHORT).show();
+                            outaccountDAO.add(tb_outaccount);
+                            Toast.makeText(AddOutaccount.this, "〖新增支出〗数据添加成功！",  Toast.LENGTH_SHORT).show();
+                           /* Intent intent = new Intent(AddOutaccount.this,AddOutaccount.class);
+                            startActivity(intent);*/
                         } else {
-                            Toast.makeText(AddOutaccount.this, "������֧����", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddOutaccount.this, "请输入支出金额！" ,Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-        btnCancelButton.setOnClickListener(new OnClickListener() {// Ϊȡ��ť���ü����¼�
+        btnCancelButton.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View arg0) {
-                        txtMoney.setText("");// ���ý���ı���Ϊ��
-                        txtMoney.setHint("0.00");// Ϊ����ı���������ʾ
-                        txtTime.setText("");// ����ʱ���ı���Ϊ��
-                        txtTime.setHint("2011-01-01");// Ϊʱ���ı���������ʾ
-                        txtAddress.setText("");// ���õص��ı���Ϊ��
-                        txtMark.setText("");// ���ñ�ע�ı���Ϊ��
-                        spType.setSelection(0);// ������������б�Ĭ��ѡ���һ��
+                        txtMoney.setText("");
+                        txtMoney.setHint("0.00");
+                        txtTime.setText("");
+                        txtTime.setHint("2011-01-01");
+                        txtAddress.setText("");
+                        txtMark.setText("");
+                        spType.setSelection(0);
                     }
                 });
 
-        final Calendar c = Calendar.getInstance();// ��ȡ��ǰϵͳ����
-        mYear = c.get(Calendar.YEAR);// ��ȡ���
-        mMonth = c.get(Calendar.MONTH);// ��ȡ�·�
-        mDay = c.get(Calendar.DAY_OF_MONTH);// ��ȡ����
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        updateDisplay();// ��ʾ��ǰϵͳʱ��
+        updateDisplay();
     }
 
     @Override
-    protected Dialog onCreateDialog(int id) {// ��дonCreateDialog����
+    protected Dialog onCreateDialog(int id) {
 
         switch (id) {
-        case DATE_DIALOG_ID:// ��������ѡ��Ի���
+        case DATE_DIALOG_ID:
             return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
         }
         return null;
@@ -104,15 +105,15 @@ public class AddOutaccount extends Activity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mYear = year;// Ϊ��ݸ�ֵ
-            mMonth = monthOfYear;// Ϊ�·ݸ�ֵ
-            mDay = dayOfMonth;// Ϊ�츳ֵ
-            updateDisplay();// ��ʾ���õ�����
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            updateDisplay();
         }
     };
 
     private void updateDisplay() {
-        // ��ʾ���õ�ʱ��
+
         txtTime.setText(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay));
     }
 }

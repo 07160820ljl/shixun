@@ -82,6 +82,13 @@ public class InfoManage extends Activity {
             txtHA.setText(tb_inaccount.getHandler());
             txtMark.setText(tb_inaccount.getMark());
         }
+        txtTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
+            @Override
+            public void onClick(View arg0) {
+                showDialog(DATE_DIALOG_ID);// 显示日期选择对话框
+            }
+        });
+
 //      修改按钮
         btnEdit.setOnClickListener(new OnClickListener() {
             @Override
@@ -125,5 +132,34 @@ public class InfoManage extends Activity {
                 Toast.makeText(InfoManage.this, "〖数据〗删除成功！", Toast.LENGTH_SHORT).show();
             }
         });
+        final Calendar c = Calendar.getInstance();// 获取当前系统日期
+        mYear = c.get(Calendar.YEAR);// 获取年份
+        mMonth = c.get(Calendar.MONTH);// 获取月份
+        mDay = c.get(Calendar.DAY_OF_MONTH);// 获取天数
+        updateDisplay();// 显示当前系统时间
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {// 重写onCreateDialog方法
+
+        switch (id) {
+            case DATE_DIALOG_ID:// 弹出日期选择对话框
+                return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mYear = year;// 为年份赋值
+            mMonth = monthOfYear;// 为月份赋值
+            mDay = dayOfMonth;// 为天赋值
+            updateDisplay();// 显示设置的日期
+        }
+    };
+
+    private void updateDisplay() {
+        // 显示设置的时间
+        txtTime.setText(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay));
     }
 }

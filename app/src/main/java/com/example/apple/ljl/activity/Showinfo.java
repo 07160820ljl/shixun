@@ -78,7 +78,7 @@ public class Showinfo extends Activity {
                     intent = new Intent(Showinfo.this, InfoManage.class);
                     intent.putExtra(FLAG, new String[]{strid, strType});
                 } else if (strType == "btnflaginfo") {
-//                    intent = new Intent(Showinfo.this, FlagManage.class);
+                     intent = new Intent(Showinfo.this, FlagManage.class);
                     intent.putExtra(FLAG, strid);
                 }
                 startActivity(intent);

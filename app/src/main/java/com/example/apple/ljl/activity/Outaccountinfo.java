@@ -18,56 +18,53 @@ import com.example.apple.ljl.model.Tb_outaccount;
 import java.util.List;
 
 public class Outaccountinfo extends Activity {
-    public static final String FLAG = "id";// ����һ��������������Ϊ������
-    ListView lvinfo;// ����ListView����
-    String strType = "";// �����ַ���¼��������
+    private static final String FLAG = "id";
+    private ListView lvinfo;
+    private String strType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.outaccountinfo);// ���ò����ļ�
-        lvinfo = (ListView) findViewById(R.id.lvoutaccountinfo);// ��ȡ�����ļ��е�ListView���
+        setContentView(R.layout.outaccountinfo);
+        lvinfo = (ListView) findViewById(R.id.lvoutaccountinfo);
 
-        ShowInfo(R.id.btnoutinfo);// �����Զ��巽����ʾ֧����Ϣ
+        ShowInfo(R.id.btnoutinfo);
 
-        lvinfo.setOnItemClickListener(new OnItemClickListener()// ΪListView�������¼�
+        lvinfo.setOnItemClickListener(new OnItemClickListener()
         {
-            // ��дonItemClick����
+            // 覆写onItemClick方法
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String strInfo = String.valueOf(((TextView) view).getText());// ��¼֧����Ϣ
-                String strid = strInfo.substring(0, strInfo.indexOf('|'));// ��֧����Ϣ�н�ȡ֧�����
-                Intent intent = new Intent(Outaccountinfo.this, InfoManage.class);// ����Intent����
-                intent.putExtra(FLAG, new String[] { strid, strType });// ���ô������
-                startActivity(intent);// ִ��Intent����
+                String strInfo = String.valueOf(((TextView) view).getText());
+                String strid = strInfo.substring(0, strInfo.indexOf('|'));
+                Intent intent = new Intent(Outaccountinfo.this, InfoManage.class);
+                intent.putExtra(FLAG, new String[] { strid, strType });
+                startActivity(intent);
             }
         });
     }
 
-    private void ShowInfo(int intType) {// ������ݴ���Ĺ������ͣ���ʾ��Ӧ����Ϣ
-        String[] strInfos = null;// �����ַ����飬�����洢֧����Ϣ
-        ArrayAdapter<String> arrayAdapter = null;// ����ArrayAdapter����
-        strType = "btnoutinfo";// ΪstrType������ֵ
-        OutaccountDAO outaccountinfo = new OutaccountDAO(Outaccountinfo.this);// ����OutaccountDAO����
-        // ��ȡ����֧����Ϣ�����洢��List���ͼ�����
+    private void ShowInfo(int intType) {
+        String[] strInfos = null;
+        ArrayAdapter<String> arrayAdapter = null;
+        strType = "btnoutinfo";
+        OutaccountDAO outaccountinfo = new OutaccountDAO(Outaccountinfo.this);
         List<Tb_outaccount> listoutinfos = outaccountinfo.getScrollData(0, (int) outaccountinfo.getCount());
-        strInfos = new String[listoutinfos.size()];// �����ַ�����ĳ���
-        int i = 0;// ����һ����ʼ��ʶ
-        for (Tb_outaccount tb_outaccount : listoutinfos) {// ����List���ͼ���
-            // ��֧�������Ϣ��ϳ�һ���ַ��洢���ַ��������Ӧλ��
-            strInfos[i] = tb_outaccount.getid() + "|" + tb_outaccount.getType() + " " + String.valueOf(tb_outaccount.getMoney()) + "Ԫ     "
+        strInfos = new String[listoutinfos.size()];
+        int i = 0;
+        for (Tb_outaccount tb_outaccount : listoutinfos) {
+            strInfos[i] = tb_outaccount.getid() + "|" + tb_outaccount.getType() + " " + String.valueOf(tb_outaccount.getMoney()) + "元     "
                     + tb_outaccount.getTime();
-            i++;// ��ʶ��1
+            i++;
         }
-        // ʹ���ַ������ʼ��ArrayAdapter����
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
-        lvinfo.setAdapter(arrayAdapter);// ΪListView�б��������Դ
+        lvinfo.setAdapter(arrayAdapter);
     }
 
     @Override
     protected void onRestart() {
         // TODO Auto-generated method stub
-        super.onRestart();// ʵ�ֻ����еķ���
-        ShowInfo(R.id.btnoutinfo);// ��ʾ������Ϣ
+        super.onRestart();
+        ShowInfo(R.id.btnoutinfo);
     }
 }
